@@ -1,0 +1,57 @@
+﻿@model AtualizaEventoMagazineLuiza.Models.MontarRelatorios
+
+@{
+    ViewData["Title"] = "Montar Relatorio de Manuseio";
+}
+
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.css" rel="stylesheet">
+    <link href="css/owl.transitions.css" rel="stylesheet">
+    <link href="css/prettyPhoto.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/star-rating.min.css" rel="stylesheet">
+    <script type="text/javascript" src="~/js/jquery-3.5.1.min.js"></script>
+</head>
+<h2>Relatorio de Manuseio</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="Stream">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label name="Data" class="control-label">Data da Ocorrencia:</label><br />
+                <input type="datetime-local" asp-for="DtInicial"
+                       name="DtInicial" value="@ViewData["DtInicial"]"
+                       min="2020-01-01T00:00" max="" class="form-control">
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <input type="datetime-local" asp-for="DtFinal"
+                           name="DtFinal" value="@ViewData["DtFinal"]"
+                           min="2020-01-01T00:00" max="" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdUnidadePostadora" class="control-label">AGF Postadora</label><br />
+                    <select asp-for="IdUnidadePostadora" class="form-control">
+                        <option value="20908784">AGF Riacho das Pedras - MG</option>
+                        <option value="50904639">AGF Siga - RJ</option>
+
+                    </select>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Extrair" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
