@@ -59,35 +59,41 @@ namespace AtualizaEventoMagazineLuiza.Data
         public static Pedidos BuscaObservacaoUm(string Etiqueta)
         {
             Pedidos oPedido = new Pedidos();
-            using (SqlConnection connection = new SqlConnection(conexao))
+            try
             {
-                connection.Open();
-                SqlCommand command = null;
-
-                string sql = "SELECT c.IdConhecimento, c.ObservacaoUm, c.NumeroNotaFiscal, c.Etiqueta FROM CONHECIMENTO C iNNER JOIN Atendimento A ON A.IdAtendimento = C.IdAtendimento WHERE A.IdEmpresa = 56077 AND Etiqueta = @Etiqueta";
-                command = new SqlCommand(sql, connection);
-
-                SqlParameter sqlEtiqueta = new SqlParameter("@Etiqueta", SqlDbType.VarChar, 13);
-
-                sqlEtiqueta.Value = Etiqueta;
-                command.Parameters.Add(sqlEtiqueta);
-
-                command.Prepare();
-                SqlDataReader reader = command.ExecuteReader();
-
-
-
-                if (!reader.HasRows)
-                    return null;
-
-                if (reader.Read())
+                using (SqlConnection connection = new SqlConnection(conexao))
                 {
-                    oPedido.Id = int.Parse(reader[0].ToString());
-                    oPedido.Pedido = int.Parse(reader[1].ToString());
-                    oPedido.NotaFiscal = int.Parse(reader[2].ToString());
-                    oPedido.Etiqueta = reader[3].ToString();
+                    connection.Open();
+                    SqlCommand command = null;
+
+                    string sql = "SELECT c.IdConhecimento, c.ObservacaoUm, c.NumeroNotaFiscal, c.Etiqueta FROM CONHECIMENTO C iNNER JOIN Atendimento A ON A.IdAtendimento = C.IdAtendimento WHERE A.IdEmpresa = 56077 AND Etiqueta = @Etiqueta";
+                    command = new SqlCommand(sql, connection);
+
+                    SqlParameter sqlEtiqueta = new SqlParameter("@Etiqueta", SqlDbType.VarChar, 13);
+
+                    sqlEtiqueta.Value = Etiqueta;
+                    command.Parameters.Add(sqlEtiqueta);
+
+                    command.Prepare();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (!reader.HasRows)
+                        return null;
+
+                    if (reader.Read())
+                    {
+                        oPedido.Id = int.Parse(reader[0].ToString());
+                        oPedido.Pedido = int.Parse(reader[1].ToString());
+                        oPedido.NotaFiscal = int.Parse(reader[2].ToString());
+                        oPedido.Etiqueta = reader[3].ToString();
+                    }
                 }
             }
+            catch (SqlException)
+            {
+                return null;
+            }
+
             return oPedido;
         }
 

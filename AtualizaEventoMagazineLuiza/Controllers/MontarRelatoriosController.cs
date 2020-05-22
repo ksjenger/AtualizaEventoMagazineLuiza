@@ -24,10 +24,14 @@ namespace AtualizaEventoMagazineLuiza.Controllers
         public FileStreamResult Stream(MontarRelatorios montarRelatorios)
         {
             var fileContent = MagazineLuizaData.MontaArquivoRetorno(montarRelatorios);
-            var stream = new MemoryStream(fileContent);
-            var fileStreamResult = new FileStreamResult(stream, contentType: "text/csv");
-            fileStreamResult.FileDownloadName = "FileStreamExample.csv";
-            return fileStreamResult;
+            if (fileContent.Length > 1)
+            {
+                var stream = new MemoryStream(fileContent);
+                var fileStreamResult = new FileStreamResult(stream, contentType: "text/csv");
+                fileStreamResult.FileDownloadName = "ManuseioMagazineLuzia.csv";
+                return fileStreamResult;
+            }
+            return null;
         }
 
     }

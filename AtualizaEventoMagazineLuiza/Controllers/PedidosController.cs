@@ -12,7 +12,6 @@ namespace AtualizaEventoMagazineLuiza.Controllers
 {
     public class PedidosController : Controller
     {
-
         public IActionResult Index(Pedidos Opedido)
         {
             if (Opedido.Pedido != 0)
@@ -80,6 +79,10 @@ namespace AtualizaEventoMagazineLuiza.Controllers
             {
                 return "Objeto não encontrado";
             }
+            catch (ArgumentNullException)
+            {
+                return null;
+            }
         }
 
         [HttpPost]
@@ -94,6 +97,10 @@ namespace AtualizaEventoMagazineLuiza.Controllers
             catch (NullReferenceException)
             {
                 return "Objeto não encontrado";
+            }
+            catch (ArgumentNullException)
+            {
+                return null;
             }
         }
     }
